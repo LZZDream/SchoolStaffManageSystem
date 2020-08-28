@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.TeacherDao">
+
+    <resultMap type="com.teacher.entity.Teacher" id="TeacherMap">
+        <result property="staffNumber" column="staff_number" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="money" column="money" jdbcType="OTHER"/>
+        <result property="department" column="department" jdbcType="VARCHAR"/>
+        <result property="post" column="post" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        where staff_number = #{staffNumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        <where>
+            <if test="staffNumber != null">
+                and staff_number = #{staffNumber}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="money != null">
+                and money = #{money}
+            </if>
+            <if test="department != null and department != ''">
+                and department = #{department}
+            </if>
+            <if test="post != null and post != ''">
+                and post = #{post}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="staffNumber" useGeneratedKeys="true">
+        insert into school.teacher(name, phone, money, department, post, age, level)
+        values (#{name}, #{phone}, #{money}, #{department}, #{post}, #{age}, #{level})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.teacher
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="money != null">
+                money = #{money},
+            </if>
+            <if test="department != null and department != ''">
+                department = #{department},
+            </if>
+            <if test="post != null and post != ''">
+                post = #{post},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+        </set>
+        where staff_number = #{staffNumber}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.teacher where staff_number = #{staffNumber}
+    </delete>
+
+    <!--查询所有兼职人员数据-->
+    <select id="queryParttime" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        where post = 10
+    </select>
+
+    <!--查询所有临时聘用人员数据-->
+    <select id="queryFloater" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        where post = 11
+    </select>
+
+    <!--查询所有学者数据-->
+    <select id="queryBookMan" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        where post = 12
+    </select>
+
+    <!--查询所有返聘人员数据-->
+    <select id="queryReEmploy" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        where post = 14
+    </select>
+
+    <!--查询所有挂职人员数据-->
+    <select id="queryTemp" resultMap="TeacherMap">
+        select
+        staff_number, name, phone, money, department, post, age, level
+        from school.teacher
+        where post = 13
+    </select>
+
+</mapper>

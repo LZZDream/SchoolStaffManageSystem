@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--配置数据源,交给spring去做-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <typeAliases>
+        <package name="com.teacher.entity"/>
+    </typeAliases>
+    <mappers>
+        <mapper class="com.teacher.dao.AdministrativeTableDao"></mapper>
+        <mapper class="com.teacher.dao.ApplicantTableDao"></mapper>
+        <mapper class="com.teacher.dao.CaderTableDao"></mapper>
+        <mapper class="com.teacher.dao.CheckingDao"></mapper>
+        <mapper class="com.teacher.dao.CheckTableDao"></mapper>
+        <mapper class="com.teacher.dao.ContractDao"></mapper>
+        <mapper class="com.teacher.dao.DeadStaffDao"></mapper>
+        <mapper class="com.teacher.dao.DepartmentTableDao"></mapper>
+        <mapper class="com.teacher.dao.HighlevelTableDao"></mapper>
+        <mapper class="com.teacher.dao.LeavePaperDao"></mapper>
+        <mapper class="com.teacher.dao.PostDao"></mapper>
+        <mapper class="com.teacher.dao.RecruitmentPlanTableDao"></mapper>
+        <mapper class="com.teacher.dao.ResumeTableDao"></mapper>
+        <mapper class="com.teacher.dao.RetiredTableDao"></mapper>
+        <mapper class="com.teacher.dao.SpecialStaffDao"></mapper>
+        <mapper class="com.teacher.dao.StudentTableDao"></mapper>
+        <mapper class="com.teacher.dao.TeacherDao"></mapper>
+
+
+
+
+
+    </mappers>
+</configuration>

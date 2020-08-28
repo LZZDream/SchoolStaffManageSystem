@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.SpecialStaffDao">
+
+    <resultMap type="com.teacher.entity.SpecialStaff" id="SpecialStaffMap">
+        <result property="staffNumber" column="staff_number" jdbcType="INTEGER"/>
+        <result property="staffType" column="staff_type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SpecialStaffMap">
+        select
+        staff_number, staff_type
+        from school.special_staff
+        where staff_number = #{staffNumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SpecialStaffMap">
+        select
+        staff_number, staff_type
+        from school.special_staff
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SpecialStaffMap">
+        select
+        staff_number, staff_type
+        from school.special_staff
+        <where>
+            <if test="staffNumber != null">
+                and staff_number = #{staffNumber}
+            </if>
+            <if test="staffType != null">
+                and staff_type = #{staffType}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="staffNumber" useGeneratedKeys="true">
+        insert into school.special_staff(staff_type)
+        values (#{staffType})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.special_staff
+        <set>
+            <if test="staffType != null">
+                staff_type = #{staffType},
+            </if>
+        </set>
+        where staff_number = #{staffNumber}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.special_staff where staff_number = #{staffNumber}
+    </delete>
+
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.RecruitmentPlanTableDao">
+
+    <resultMap type="com.teacher.entity.RecruitmentPlanTable" id="RecruitmentPlanTableMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="department" column="department" jdbcType="VARCHAR"/>
+        <result property="peopleNumber" column="people_number" jdbcType="INTEGER"/>
+        <result property="reviewProgress" column="review_progress" jdbcType="INTEGER"/>
+        <result property="reviewState" column="review_state" jdbcType="INTEGER"/>
+        <result property="workAddress" column="work_address" jdbcType="VARCHAR"/>
+        <result property="money" column="money" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RecruitmentPlanTableMap">
+        select
+        id, department, people_number, review_progress, review_state, work_address, money
+        from school.recruitment_plan_table
+        where id = #{id}
+    </select>
+
+    <select id="queryAllList" resultMap="RecruitmentPlanTableMap">
+        select * from school.recruitment_plan_table
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RecruitmentPlanTableMap">
+        select
+        id, department, people_number, review_progress, review_state, work_address, money
+        from school.recruitment_plan_table
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RecruitmentPlanTableMap">
+        select
+        id, department, people_number, review_progress, review_state, work_address, money
+        from school.recruitment_plan_table
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="department != null and department != ''">
+                and department = #{department}
+            </if>
+            <if test="peopleNumber != null">
+                and people_number = #{peopleNumber}
+            </if>
+            <if test="reviewProgress != null">
+                and review_progress = #{reviewProgress}
+            </if>
+            <if test="reviewState != null">
+                and review_state = #{reviewState}
+            </if>
+            <if test="workAddress != null and workAddress != ''">
+                and work_address = #{workAddress}
+            </if>
+            <if test="money != null">
+                and money = #{money}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into school.recruitment_plan_table(department, people_number, review_progress, review_state,
+        work_address, money)
+        values (#{department}, #{peopleNumber}, #{reviewProgress}, #{reviewState}, #{workAddress}, #{money})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.recruitment_plan_table
+        <set>
+            <if test="department != null and department != ''">
+                department = #{department},
+            </if>
+            <if test="peopleNumber != null">
+                people_number = #{peopleNumber},
+            </if>
+            <if test="reviewProgress != null">
+                review_progress = #{reviewProgress},
+            </if>
+            <if test="reviewState != null">
+                review_state = #{reviewState},
+            </if>
+            <if test="workAddress != null and workAddress != ''">
+                work_address = #{workAddress},
+            </if>
+            <if test="money != null">
+                money = #{money},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.recruitment_plan_table where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.ResumeTableDao">
+
+    <resultMap type="com.teacher.entity.ResumeTable" id="ResumeTableMap">
+        <result property="resumeId" column="resume_id" jdbcType="INTEGER"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="OTHER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="interviewSchedule" column="interview_schedule" jdbcType="INTEGER"/>
+        <result property="interviewState" column="interview_state" jdbcType="INTEGER"/>
+        <result property="healthResult" column="health_result" jdbcType="INTEGER"/>
+        <result property="mail" column="mail" jdbcType="VARCHAR"/>
+        <result property="intentionJob" column="Intention_job" jdbcType="VARCHAR"/>
+        <result property="intentionMoney" column="intention_money" jdbcType="OTHER"/>
+        <result property="technology" column="technology" jdbcType="VARCHAR"/>
+        <result property="experiences" column="experiences" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ResumeTableMap">
+        select
+        resume_id, account, name, sex, phone, interview_schedule, interview_state, health_result, mail, Intention_job,
+        intention_money, technology, experiences
+        from school.resume_table
+        where resume_id = #{resumeId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ResumeTableMap">
+        select
+        resume_id, account, name, sex, phone, interview_schedule, interview_state, health_result, mail, Intention_job,
+        intention_money, technology, experiences
+        from school.resume_table
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ResumeTableMap">
+        select
+        resume_id, account, name, sex, phone, interview_schedule, interview_state, health_result, mail, Intention_job,
+        intention_money, technology, experiences
+        from school.resume_table
+        <where>
+            <if test="resumeId != null">
+                and resume_id = #{resumeId}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="interviewSchedule != null">
+                and interview_schedule = #{interviewSchedule}
+            </if>
+            <if test="interviewState != null">
+                and interview_state = #{interviewState}
+            </if>
+            <if test="healthResult != null">
+                and health_result = #{healthResult}
+            </if>
+            <if test="mail != null and mail != ''">
+                and mail = #{mail}
+            </if>
+            <if test="intentionJob != null and intentionJob != ''">
+                and Intention_job = #{intentionJob}
+            </if>
+            <if test="intentionMoney != null">
+                and intention_money = #{intentionMoney}
+            </if>
+            <if test="technology != null and technology != ''">
+                and technology = #{technology}
+            </if>
+            <if test="experiences != null and experiences != ''">
+                and experiences = #{experiences}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="resumeId" useGeneratedKeys="true">
+        insert into school.resume_table(account, name, sex, phone, interview_schedule, interview_state, health_result,
+        mail, Intention_job, intention_money, technology, experiences)
+        values (#{account}, #{name}, #{sex}, #{phone}, #{interviewSchedule}, #{interviewState}, #{healthResult},
+        #{mail}, #{intentionJob}, #{intentionMoney}, #{technology}, #{experiences})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.resume_table
+        <set>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="interviewSchedule != null">
+                interview_schedule = #{interviewSchedule},
+            </if>
+            <if test="interviewState != null">
+                interview_state = #{interviewState},
+            </if>
+            <if test="healthResult != null">
+                health_result = #{healthResult},
+            </if>
+            <if test="mail != null and mail != ''">
+                mail = #{mail},
+            </if>
+            <if test="intentionJob != null and intentionJob != ''">
+                Intention_job = #{intentionJob},
+            </if>
+            <if test="intentionMoney != null">
+                intention_money = #{intentionMoney},
+            </if>
+            <if test="technology != null and technology != ''">
+                technology = #{technology},
+            </if>
+            <if test="experiences != null and experiences != ''">
+                experiences = #{experiences},
+            </if>
+        </set>
+        where resume_id = #{resumeId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.resume_table where resume_id = #{resumeId}
+    </delete>
+
+</mapper>

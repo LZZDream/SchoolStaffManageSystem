@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.DeadStaffDao">
+
+    <resultMap type="com.teacher.entity.DeadStaff" id="DeadStaffMap">
+        <result property="staffNumber" column="staff_number" jdbcType="INTEGER"/>
+        <result property="homeAddress" column="home_address" jdbcType="VARCHAR"/>
+        <result property="relationName" column="relation_name" jdbcType="VARCHAR"/>
+        <result property="idNumber" column="ID_number" jdbcType="VARCHAR"/>
+        <result property="phong" column="phong" jdbcType="VARCHAR"/>
+        <result property="subsidy" column="subsidy" jdbcType="OTHER"/>
+        <result property="subsidyTime" column="subsidy_time" jdbcType="OTHER"/>
+        <result property="specificContent" column="specific_content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="DeadStaffMap">
+        select
+        staff_number, home_address, relation_name, ID_number, phong, subsidy, subsidy_time, specific_content
+        from school.dead_staff
+        where staff_number = #{staffNumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="DeadStaffMap">
+        select
+        staff_number, home_address, relation_name, ID_number, phong, subsidy, subsidy_time, specific_content
+        from school.dead_staff
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="DeadStaffMap">
+        select
+        staff_number, home_address, relation_name, ID_number, phong, subsidy, subsidy_time, specific_content
+        from school.dead_staff
+        <where>
+            <if test="staffNumber != null">
+                and staff_number = #{staffNumber}
+            </if>
+            <if test="homeAddress != null and homeAddress != ''">
+                and home_address = #{homeAddress}
+            </if>
+            <if test="relationName != null and relationName != ''">
+                and relation_name = #{relationName}
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                and ID_number = #{idNumber}
+            </if>
+            <if test="phong != null and phong != ''">
+                and phong = #{phong}
+            </if>
+            <if test="subsidy != null">
+                and subsidy = #{subsidy}
+            </if>
+            <if test="subsidyTime != null">
+                and subsidy_time = #{subsidyTime}
+            </if>
+            <if test="specificContent != null and specificContent != ''">
+                and specific_content = #{specificContent}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="staffNumber" useGeneratedKeys="true">
+        insert into school.dead_staff(home_address, relation_name, ID_number, phong, subsidy, subsidy_time,
+        specific_content)
+        values (#{homeAddress}, #{relationName}, #{idNumber}, #{phong}, #{subsidy}, #{subsidyTime}, #{specificContent})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.dead_staff
+        <set>
+            <if test="homeAddress != null and homeAddress != ''">
+                home_address = #{homeAddress},
+            </if>
+            <if test="relationName != null and relationName != ''">
+                relation_name = #{relationName},
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                ID_number = #{idNumber},
+            </if>
+            <if test="phong != null and phong != ''">
+                phong = #{phong},
+            </if>
+            <if test="subsidy != null">
+                subsidy = #{subsidy},
+            </if>
+            <if test="subsidyTime != null">
+                subsidy_time = #{subsidyTime},
+            </if>
+            <if test="specificContent != null and specificContent != ''">
+                specific_content = #{specificContent},
+            </if>
+        </set>
+        where staff_number = #{staffNumber}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.dead_staff where staff_number = #{staffNumber}
+    </delete>
+
+</mapper>

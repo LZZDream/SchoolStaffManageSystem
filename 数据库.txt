@@ -1,0 +1,297 @@
+drop table if exists administrative_table;
+
+drop table if exists applicant_table;
+
+drop table if exists cader_table;
+
+drop table if exists check_table;
+
+drop table if exists checking;
+
+drop table if exists contract;
+
+drop table if exists dead_staff;
+
+drop table if exists department_table;
+
+drop table if exists highlevel_table;
+
+drop table if exists leave_paper;
+
+drop table if exists level_review;
+
+drop table if exists post;
+
+drop table if exists recruitment_plan_table;
+
+drop table if exists resume_table;
+
+drop table if exists retired_table;
+
+drop table if exists special_staff;
+
+drop table if exists student_table;
+
+drop table if exists teacher;
+
+/*==============================================================*/
+/* Table: administrative_table                                  */
+/*==============================================================*/
+create table administrative_table
+(
+   id                   int not null auto_increment,
+   name                 char(20),
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: applicant_table                                       */
+/*==============================================================*/
+create table applicant_table
+(
+   account              char(20) not null,
+   password             char(20),
+   level                int default 0,
+   primary key (account)
+);
+
+/*==============================================================*/
+/* Table: cader_table                                           */
+/*==============================================================*/
+create table cader_table
+(
+   staff_number         int not null auto_increment,
+   degree               char(20),
+   level                char(20),
+   primary key (staff_number)
+);
+
+/*==============================================================*/
+/* Table: check_table                                           */
+/*==============================================================*/
+create table check_table
+(
+   staff_number         int not null,
+   year                 int not null,
+   department           char(20),
+   thesis_num           int,
+   sex                  bool,
+   ID_number            char(20),
+   department_check     int default -1,
+   boss_check           int default -1,
+   party_check          int default -1,
+   college_check        int default -1,
+   primary key (staff_number, year)
+);
+
+/*==============================================================*/
+/* Table: checking                                              */
+/*==============================================================*/
+create table checking
+(
+   id                   int not null auto_increment,
+   staff_number         int,
+   date                 date,
+   start_time           time,
+   end_time             time,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: contract                                              */
+/*==============================================================*/
+create table contract
+(
+   id                   int not null auto_increment,
+   date                 date,
+   content              text,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: dead_staff                                            */
+/*==============================================================*/
+create table dead_staff
+(
+   staff_number         int not null auto_increment,
+   home_address         char(20),
+   relation_name        char(20),
+   ID_number            char(20),
+   phong                char(20),
+   subsidy              bool,
+   subsidy_time         date,
+   specific_content     char(50),
+   primary key (staff_number)
+);
+
+/*==============================================================*/
+/* Table: department_table                                      */
+/*==============================================================*/
+create table department_table
+(
+   id                   int not null auto_increment,
+   name                 char(20),
+   staff_number         char(20),
+   introduction         char(50),
+   adress               char(50),
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: highlevel_table                                       */
+/*==============================================================*/
+create table highlevel_table
+(
+   staff_number         int not null auto_increment,
+   adacemy              char(20),
+   major                char(20),
+   home_address         char(20),
+   primary key (staff_number)
+);
+
+/*==============================================================*/
+/* Table: leave_paper                                           */
+/*==============================================================*/
+create table leave_paper
+(
+   id                   int not null,
+   staff_number         int,
+   start_date           date,
+   end_date             date,
+   personnel_dep_check  int default -1,
+   academy_check        int default -1,
+   college_check        int default -1,
+   start_time           time,
+   end_time             time,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: level_review                                          */
+/*==============================================================*/
+create table level_review
+(
+   year                 int not null,
+   staff_number         int not null,
+   academy              char(20),
+   sex                  bool,
+   ID_number            char(20),
+   thesis               int,
+   department_check     int default -1,
+   academic_check       int default -1,
+   primary key (year, staff_number)
+);
+
+/*==============================================================*/
+/* Table: post                                                  */
+/*==============================================================*/
+create table post
+(
+   id                   int not null auto_increment,
+   name                 char(20),
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: recruitment_plan_table                                */
+/*==============================================================*/
+create table recruitment_plan_table
+(
+   id                   int not null auto_increment,
+   department           char(20),
+   people_number        int,
+   review_progress      int default -1,
+   review_state         int default -1,
+   work_address         char(20),
+   money                float,
+   primary key (id)
+);
+
+/*==============================================================*/
+/* Table: resume_table                                          */
+/*==============================================================*/
+create table resume_table
+(
+   resume_id            int not null auto_increment,
+   account              char(20),
+   name                 char(20),
+   sex                  bool,
+   phone                char(20),
+   interview_schedule   int default -1,
+   interview_state      int default -1,
+   health_result        int default -1,
+   mail                 char(20),
+   Intention_job        char(20),
+   intention_money      float,
+   technology           char(50),
+   experiences          char(50),
+   primary key (resume_id)
+);
+
+/*==============================================================*/
+/* Table: retired_table                                         */
+/*==============================================================*/
+create table retired_table
+(
+   staff_number         int not null auto_increment,
+   retired_time         date,
+   primary key (staff_number)
+);
+
+/*==============================================================*/
+/* Table: special_staff                                         */
+/*==============================================================*/
+create table special_staff
+(
+   staff_number         int not null auto_increment,
+   staff_type           int,
+   primary key (staff_number)
+);
+
+/*==============================================================*/
+/* Table: student_table                                         */
+/*==============================================================*/
+create table student_table
+(
+   student_number       int not null auto_increment,
+   name                 char(20),
+   sex                  bool,
+   academy              char(20),
+   age                  int,
+   phone                char(20),
+   primary key (student_number)
+);
+
+/*==============================================================*/
+/* Table: teacher                                               */
+/*==============================================================*/
+create table teacher
+(
+   staff_number         int not null auto_increment,
+   name                 char(20),
+   phone                char(20),
+   money                float,
+   department           char(20),
+   post                 char(20),
+   age                  int,
+   level                int default 0,
+   primary key (staff_number)
+);
+
+alter table cader_table add constraint FK_Reference_6 foreign key (staff_number)
+      references teacher (staff_number) on delete restrict on update restrict;
+
+alter table dead_staff add constraint FK_Reference_2 foreign key (staff_number)
+      references teacher (staff_number) on delete restrict on update restrict;
+
+alter table highlevel_table add constraint FK_Reference_3 foreign key (staff_number)
+      references teacher (staff_number) on delete restrict on update restrict;
+
+alter table resume_table add constraint FK_Reference_7 foreign key (account)
+      references applicant_table (account) on delete restrict on update restrict;
+
+alter table retired_table add constraint FK_Reference_4 foreign key (staff_number)
+      references teacher (staff_number) on delete restrict on update restrict;
+
+alter table special_staff add constraint FK_Reference_5 foreign key (staff_number)
+      references teacher (staff_number) on delete restrict on update restrict;

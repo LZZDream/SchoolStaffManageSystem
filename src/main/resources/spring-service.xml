@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 扫描service相关的bean -->
+    <context:component-scan base-package="com.teacher.service" />
+    <!--Impl注入到IOC容器中-->
+
+
+
+    <bean id="administrativeTableServiceImpl" class="com.teacher.service.impl.AdministrativeTableServiceImpl">
+        <property name="administrativeTableDao" ref="administrativeTableDao"></property>
+    </bean>
+    <bean id="applicantTableServiceImpl" class="com.teacher.service.impl.ApplicantTableServiceImpl">
+        <property name="applicantTableDao" ref="applicantTableDao"></property>
+    </bean>
+    <bean id="CaderTableServiceImpl" class="com.teacher.service.impl.CaderTableServiceImpl">
+        <property name="caderTableDao" ref="caderTableDao"></property>
+    </bean>
+    <bean id="checkingServiceImpl" class="com.teacher.service.impl.CheckingServiceImpl">
+        <property name="checkingDao" ref="checkingDao"></property>
+    </bean>
+    <bean id="checkTableServiceImpl" class="com.teacher.service.impl.CheckTableServiceImpl">
+        <property name="checkTableDao" ref="checkTableDao"></property>
+    </bean>
+    <bean id="contractServiceImpl" class="com.teacher.service.impl.ContractServiceImpl">
+        <property name="contractDao" ref="contractDao"></property>
+    </bean>
+    <bean id="deadStaffServiceImpl" class="com.teacher.service.impl.DeadStaffServiceImpl">
+        <property name="deadStaffDao" ref="deadStaffDao"></property>
+    </bean>
+
+    <bean id="departmentTableServiceImpl" class="com.teacher.service.impl.DepartmentTableServiceImpl">
+        <property name="departmentTableDao" ref="departmentTableDao"></property>
+    </bean>
+    <bean id="highlevelTableServiceImpl" class="com.teacher.service.impl.HighlevelTableServiceImpl">
+        <property name="highlevelTableDao" ref="highlevelTableDao"></property>
+    </bean>
+    <bean id="leavePaperServiceImpl" class="com.teacher.service.impl.LeavePaperServiceImpl">
+        <property name="leavePaperDao" ref="leavePaperDao"></property>
+    </bean>
+    <bean id="levelReviewServiceImpl" class="com.teacher.service.impl.LevelReviewServiceImpl">
+        <property name="levelReviewDao" ref="levelReviewDao"></property>
+    </bean>
+    <bean id="postServiceImpl" class="com.teacher.service.impl.PostServiceImpl">
+        <property name="postDao" ref="postDao"></property>
+    </bean>
+    <bean id="recruitmentPlanTableServiceImpl" class="com.teacher.service.impl.RecruitmentPlanTableServiceImpl">
+        <property name="recruitmentPlanTableDao" ref="recruitmentPlanTableDao"></property>
+    </bean>
+    <bean id="resumeTableServiceImpl" class="com.teacher.service.impl.ResumeTableServiceImpl">
+        <property name="resumeTableDao" ref="resumeTableDao"></property>
+    </bean>
+    <bean id="retiredTableServiceImpl" class="com.teacher.service.impl.RetiredTableServiceImpl">
+        <property name="retiredTableDao" ref="retiredTableDao"></property>
+    </bean>
+    <bean id="specialStaffServiceImpl" class="com.teacher.service.impl.SpecialStaffServiceImpl">
+        <property name="specialStaffDao" ref="specialStaffDao"></property>
+    </bean>
+    <bean id="studentTableServiceImpl" class="com.teacher.service.impl.StudentTableServiceImpl">
+        <property name="studentTableDao" ref="studentTableDao"></property>
+    </bean>
+    <bean id="teacherServiceImpl" class="com.teacher.service.impl.TeacherServiceImpl">
+        <property name="teacherDao" ref="teacherDao"></property>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!--4.aop事务支持!-->
+</beans>

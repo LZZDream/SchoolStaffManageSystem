@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.ApplicantTableDao">
+
+    <resultMap type="com.teacher.entity.ApplicantTable" id="ApplicantTableMap">
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ApplicantTableMap">
+        select
+        account, password, level
+        from school.applicant_table
+        where account = #{account}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ApplicantTableMap">
+        select
+        account, password, level
+        from school.applicant_table
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ApplicantTableMap">
+        select
+        account, password, level
+        from school.applicant_table
+        <where>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="level != null">
+                and level = #{level}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="account" useGeneratedKeys="true">
+        insert into school.applicant_table(account, password)
+        values (#{account}, #{password})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.applicant_table
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+        </set>
+        where account = #{account}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.applicant_table where account = #{account}
+    </delete>
+
+</mapper>

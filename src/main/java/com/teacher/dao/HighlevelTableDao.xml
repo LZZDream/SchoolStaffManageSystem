@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.HighlevelTableDao">
+
+    <resultMap type="com.teacher.entity.HighlevelTable" id="HighlevelTableMap">
+        <result property="staffNumber" column="staff_number" jdbcType="INTEGER"/>
+        <result property="adacemy" column="adacemy" jdbcType="VARCHAR"/>
+        <result property="major" column="major" jdbcType="VARCHAR"/>
+        <result property="homeAddress" column="home_address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="HighlevelTableMap">
+        select
+        staff_number, adacemy, major, home_address
+        from school.highlevel_table
+        where staff_number = #{staffNumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="HighlevelTableMap">
+        select
+        staff_number, adacemy, major, home_address
+        from school.highlevel_table
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="HighlevelTableMap">
+        select
+        staff_number, adacemy, major, home_address
+        from school.highlevel_table
+        <where>
+            <if test="staffNumber != null">
+                and staff_number = #{staffNumber}
+            </if>
+            <if test="adacemy != null and adacemy != ''">
+                and adacemy = #{adacemy}
+            </if>
+            <if test="major != null and major != ''">
+                and major = #{major}
+            </if>
+            <if test="homeAddress != null and homeAddress != ''">
+                and home_address = #{homeAddress}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="staffNumber" useGeneratedKeys="true">
+        insert into school.highlevel_table(adacemy, major, home_address)
+        values (#{adacemy}, #{major}, #{homeAddress})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.highlevel_table
+        <set>
+            <if test="adacemy != null and adacemy != ''">
+                adacemy = #{adacemy},
+            </if>
+            <if test="major != null and major != ''">
+                major = #{major},
+            </if>
+            <if test="homeAddress != null and homeAddress != ''">
+                home_address = #{homeAddress},
+            </if>
+        </set>
+        where staff_number = #{staffNumber}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.highlevel_table where staff_number = #{staffNumber}
+    </delete>
+
+</mapper>

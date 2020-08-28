@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.CheckTableDao">
+
+    <resultMap type="com.teacher.entity.CheckTable" id="CheckTableMap">
+        <result property="staffNumber" column="staff_number" jdbcType="INTEGER"/>
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="department" column="department" jdbcType="VARCHAR"/>
+        <result property="thesisNum" column="thesis_num" jdbcType="INTEGER"/>
+        <result property="sex" column="sex" jdbcType="OTHER"/>
+        <result property="idNumber" column="ID_number" jdbcType="VARCHAR"/>
+        <result property="departmentCheck" column="department_check" jdbcType="INTEGER"/>
+        <result property="bossCheck" column="boss_check" jdbcType="INTEGER"/>
+        <result property="partyCheck" column="party_check" jdbcType="INTEGER"/>
+        <result property="collegeCheck" column="college_check" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CheckTableMap">
+        select
+        staff_number, year, department, thesis_num, sex, ID_number, department_check, boss_check, party_check,
+        college_check
+        from school.check_table
+        where staff_number = #{staffNumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CheckTableMap">
+        select
+        staff_number, year, department, thesis_num, sex, ID_number, department_check, boss_check, party_check,
+        college_check
+        from school.check_table
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CheckTableMap">
+        select
+        staff_number, year, department, thesis_num, sex, ID_number, department_check, boss_check, party_check,
+        college_check
+        from school.check_table
+        <where>
+            <if test="staffNumber != null">
+                and staff_number = #{staffNumber}
+            </if>
+            <if test="year != null">
+                and year = #{year}
+            </if>
+            <if test="department != null and department != ''">
+                and department = #{department}
+            </if>
+            <if test="thesisNum != null">
+                and thesis_num = #{thesisNum}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                and ID_number = #{idNumber}
+            </if>
+            <if test="departmentCheck != null">
+                and department_check = #{departmentCheck}
+            </if>
+            <if test="bossCheck != null">
+                and boss_check = #{bossCheck}
+            </if>
+            <if test="partyCheck != null">
+                and party_check = #{partyCheck}
+            </if>
+            <if test="collegeCheck != null">
+                and college_check = #{collegeCheck}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="staffNumber" useGeneratedKeys="true">
+        insert into school.check_table(department, thesis_num, sex, ID_number, department_check, boss_check,
+        party_check, college_check)
+        values (#{department}, #{thesisNum}, #{sex}, #{idNumber}, #{departmentCheck}, #{bossCheck}, #{partyCheck},
+        #{collegeCheck})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.check_table
+        <set>
+            <if test="department != null and department != ''">
+                department = #{department},
+            </if>
+            <if test="thesisNum != null">
+                thesis_num = #{thesisNum},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                ID_number = #{idNumber},
+            </if>
+            <if test="departmentCheck != null">
+                department_check = #{departmentCheck},
+            </if>
+            <if test="bossCheck != null">
+                boss_check = #{bossCheck},
+            </if>
+            <if test="partyCheck != null">
+                party_check = #{partyCheck},
+            </if>
+            <if test="collegeCheck != null">
+                college_check = #{collegeCheck},
+            </if>
+        </set>
+        where staff_number = #{staffNumber}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.check_table where staff_number = #{staffNumber}
+    </delete>
+
+</mapper>

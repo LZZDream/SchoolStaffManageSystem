@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.LevelReviewDao">
+
+    <resultMap type="com.teacher.entity.LevelReview" id="LevelReviewMap">
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="staffNumber" column="staff_number" jdbcType="INTEGER"/>
+        <result property="academy" column="academy" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="OTHER"/>
+        <result property="idNumber" column="ID_number" jdbcType="VARCHAR"/>
+        <result property="thesis" column="thesis" jdbcType="INTEGER"/>
+        <result property="departmentCheck" column="department_check" jdbcType="INTEGER"/>
+        <result property="academicCheck" column="academic_check" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="LevelReviewMap">
+        select
+        year, staff_number, academy, sex, ID_number, thesis, department_check, academic_check
+        from school.level_review
+        where year = #{year}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LevelReviewMap">
+        select
+        year, staff_number, academy, sex, ID_number, thesis, department_check, academic_check
+        from school.level_review
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="LevelReviewMap">
+        select
+        year, staff_number, academy, sex, ID_number, thesis, department_check, academic_check
+        from school.level_review
+        <where>
+            <if test="year != null">
+                and year = #{year}
+            </if>
+            <if test="staffNumber != null">
+                and staff_number = #{staffNumber}
+            </if>
+            <if test="academy != null and academy != ''">
+                and academy = #{academy}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                and ID_number = #{idNumber}
+            </if>
+            <if test="thesis != null">
+                and thesis = #{thesis}
+            </if>
+            <if test="departmentCheck != null">
+                and department_check = #{departmentCheck}
+            </if>
+            <if test="academicCheck != null">
+                and academic_check = #{academicCheck}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="year" useGeneratedKeys="true">
+        insert into school.level_review(academy, sex, ID_number, thesis, department_check, academic_check)
+        values (#{academy}, #{sex}, #{idNumber}, #{thesis}, #{departmentCheck}, #{academicCheck})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.level_review
+        <set>
+            <if test="academy != null and academy != ''">
+                academy = #{academy},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                ID_number = #{idNumber},
+            </if>
+            <if test="thesis != null">
+                thesis = #{thesis},
+            </if>
+            <if test="departmentCheck != null">
+                department_check = #{departmentCheck},
+            </if>
+            <if test="academicCheck != null">
+                academic_check = #{academicCheck},
+            </if>
+        </set>
+        where year = #{year}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.level_review where year = #{year}
+    </delete>
+
+</mapper>

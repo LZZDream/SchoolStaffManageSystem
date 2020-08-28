@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teacher.dao.StudentTableDao">
+
+    <resultMap type="com.teacher.entity.StudentTable" id="StudentTableMap">
+        <result property="studentNumber" column="student_number" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="OTHER"/>
+        <result property="academy" column="academy" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="StudentTableMap">
+        select
+        student_number, name, sex, academy, age, phone
+        from school.student_table
+        where student_number = #{studentNumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StudentTableMap">
+        select
+        student_number, name, sex, academy, age, phone
+        from school.student_table
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="StudentTableMap">
+        select
+        student_number, name, sex, academy, age, phone
+        from school.student_table
+        <where>
+            <if test="studentNumber != null">
+                and student_number = #{studentNumber}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="academy != null and academy != ''">
+                and academy = #{academy}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="studentNumber" useGeneratedKeys="true">
+        insert into school.student_table(name, sex, academy, age, phone)
+        values (#{name}, #{sex}, #{academy}, #{age}, #{phone})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.student_table
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="academy != null and academy != ''">
+                academy = #{academy},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+        </set>
+        where student_number = #{studentNumber}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.student_table where student_number = #{studentNumber}
+    </delete>
+
+</mapper>
